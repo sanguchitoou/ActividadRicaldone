@@ -4,9 +4,9 @@ import StudentLoginController from "../controllers/StudentLoginController.js";
 
 //Inicializamos el router
 const router = express.Router();
-/*
+
 //Lo utilizamos
-router.route("/").post(StudentLoginController);
-*/
+router.route("/").post(StudentLoginController.login);
+
 //Exportamos todo
 export default router;

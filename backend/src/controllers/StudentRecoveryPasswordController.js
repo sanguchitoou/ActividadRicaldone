@@ -11,7 +11,7 @@ const studentRecoveryPasswordController = {};
 
 //Realizamos la función para la realización del login
 studentRecoveryPasswordController.requestCode = async (request, response) => {
-  //1. Solicitamos los datos
+  //Solicitamos los datos
   const { email } = request.body;
 
   //Validamos el formato del código

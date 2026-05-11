@@ -4,14 +4,14 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { config } from "../../config.js";
 import bcrypt from "bcryptjs";
-import StudentModel from "../models/StudentModel.js";
+import TeacherModel from "../models/TeacherModel.js";
 
 //Creamos un array de métodos DENTRO de la carpeta controlador
-const studentRecoveryPasswordController = {};
+const teacherRecoveryPasswordController = {};
 
 //Realizamos la función para la realización del login
-studentRecoveryPasswordController.requestCode = async (request, response) => {
-  //1. Solicitamos los datos
+teacherRecoveryPasswordController.requestCode = async (request, response) => {
+  //Solicitamos los datos
   const { email } = request.body;
 
   //Validamos el formato del código
@@ -23,10 +23,10 @@ studentRecoveryPasswordController.requestCode = async (request, response) => {
 
   try {
     //Buscamos si el correo existe
-    const studentFound = await StudentModel.findOne({ email });
+    const teacherFound = await TeacherModel.findOne({ email });
 
     //Si no existe el correo en la base de datos
-    if (!studentFound) {
+    if (!teacherFound) {
       return response.status(400).json({ message: "Email no encontrado " });
     }
 
@@ -38,7 +38,7 @@ studentRecoveryPasswordController.requestCode = async (request, response) => {
       {
         email,
         verificationCode,
-        userType: "Student",
+        userType: "Teacher",
         verified: false,
       },
       config.JWT.SECRET,
@@ -88,7 +88,7 @@ studentRecoveryPasswordController.requestCode = async (request, response) => {
 };
 
 //Verificar el código de verificación
-studentRecoveryPasswordController.verifyCode = async (request, response) => {
+teacherRecoveryPasswordController.verifyCode = async (request, response) => {
   //Solicitamos los datos
   const { verificationCodeRequest } = request.body;
 
@@ -108,7 +108,7 @@ studentRecoveryPasswordController.verifyCode = async (request, response) => {
     const newToken = jsonwebtoken.sign(
       {
         email: decoded.email,
-        userType: "Student",
+        userType: "Teacher",
         verified: true,
       },
       config.JWT.SECRET,
@@ -133,7 +133,7 @@ studentRecoveryPasswordController.verifyCode = async (request, response) => {
 };
 
 //Creamos el método para restablecer la contraseña
-studentRecoveryPasswordController.newPassword = async (request, response) => {
+teacherRecoveryPasswordController.newPassword = async (request, response) => {
   try {
     //Solicitamos los datos
     const { newPassword, confirmPassword } = request.body;
@@ -158,7 +158,7 @@ studentRecoveryPasswordController.newPassword = async (request, response) => {
     const passwordHash = await bcrypt.hash(newPassword, 10);
 
     //Guardamos la contraseña
-    await StudentModel.findOneAndUpdate(
+    await TeacherModel.findOneAndUpdate(
       { email: decoded.email },
       { password: passwordHash },
       { new: true },
@@ -179,4 +179,4 @@ studentRecoveryPasswordController.newPassword = async (request, response) => {
 };
 
 //Exportamos la función
-export default studentRecoveryPasswordController;
+export default teacherRecoveryPasswordController;

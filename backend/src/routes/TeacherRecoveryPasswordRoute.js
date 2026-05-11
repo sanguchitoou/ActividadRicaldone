@@ -1,20 +1,20 @@
 //Importamos EXPRESS y todo lo necesario
 import express from "express";
-import EnrollmentController from "../controllers/EnrollmentController.js";
+import TeacherRecoveryPasswordController from "../controllers/TeacherRecoveryPasswordController.js";
 
 //Inicializamos el router
 const router = express.Router();
 
 //Lo utilizamos
 router
-  .route("/")
-  .get(EnrollmentController.getEnrollment)
-  .post(EnrollmentController.insetEnrollment);
-
+  .route("/requestCode")
+  .post(TeacherRecoveryPasswordController.requestCode);
 router
-  .route("/:id")
-  .put(EnrollmentController.updateEnrollment)
-  .delete(EnrollmentController.deleteEnrollment);
+  .route("/verifyCode")
+  .post(TeacherRecoveryPasswordController.verifyCode);
+router
+  .route("/newPassword")
+  .post(TeacherRecoveryPasswordController.newPassword);
 
 //Exportamos todo
 export default router;

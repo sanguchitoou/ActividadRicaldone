@@ -4,9 +4,9 @@ import TeacherLoginController from "../controllers/TeacherLoginController.js";
 
 //Inicializamos el router
 const router = express.Router();
-/*
+
 //Lo utilizamos
-router.route("/").post(TeacherLoginController);
-*/
+router.route("/").post(TeacherLoginController.login);
+
 //Exportamos todo
 export default router;

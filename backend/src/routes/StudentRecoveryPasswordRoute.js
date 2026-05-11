@@ -4,17 +4,17 @@ import StudentRecoveryPasswordController from "../controllers/StudentRecoveryPas
 
 //Inicializamos el router
 const router = express.Router();
-/*
+
 //Lo utilizamos
 router
-  .route("/")
-  .get(EnrollmentController.getEnrollment)
-  .post(EnrollmentController.insetEnrollment);
-
+  .route("/requestCode")
+  .post(StudentRecoveryPasswordController.requestCode);
 router
-  .route("/:id")
-  .put(EnrollmentController.updateEnrollment)
-  .delete(EnrollmentController.deleteEnrollment);
-*/
+  .route("/verifyCode")
+  .post(StudentRecoveryPasswordController.verifyCode);
+router
+  .route("/newPassword")
+  .post(StudentRecoveryPasswordController.newPassword);
+
 //Exportamos todo
 export default router;
